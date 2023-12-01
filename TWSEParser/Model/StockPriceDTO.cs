@@ -43,5 +43,13 @@ namespace TWSEParser.Model
 
         public int TradeCount { get; set; } //成交筆數
 
+        //MA
+        public double MA5 { get; set; }
+        public double MA10 { get; set; }
+        public double MA20 { get; set; }
+        public double MA60 { get; set; }
+        public double MACD { get; set; }
+
+        public double MACDSignal {get; set; }
     }
 }

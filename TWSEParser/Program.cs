@@ -1,4 +1,6 @@
 ﻿using TWSEParser.Service;
 
 DataParser dataParser = new DataParser();
-await dataParser.GetStockPrice("006208");
+DataProcessor dataProcessor = new DataProcessor();
+var rawDataList = await dataParser.GetStockPrice("006208");
+dataProcessor.ProcessData(rawDataList);

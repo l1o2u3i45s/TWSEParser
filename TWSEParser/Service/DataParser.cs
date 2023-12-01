@@ -14,14 +14,15 @@ namespace TWSEParser.Service
     internal class DataParser
     {
 
-        public async Task GetStockPrice(string code)
+        public async Task<List<StockPriceDTO>> GetStockPrice(string code)
         {
+            List<StockPriceDTO> result = new List<StockPriceDTO>();
             try
             {
                 int startYear = 2018;
                 DateTime startDate = new DateTime(startYear, 1, 1);
 
-                List<StockPriceDTO> result = new List<StockPriceDTO>();
+              
                 while (startDate < DateTime.Today)
                 {
                     string requestUrl =
@@ -45,6 +46,8 @@ namespace TWSEParser.Service
             {
                 Console.WriteLine(e);
             }
+
+            return result;
         }
 
 
