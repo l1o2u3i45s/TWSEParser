@@ -44,7 +44,7 @@ namespace TWSEParser.Service
                             result.Add(dto);
                     }
 
-                    await Task.Delay(500);
+                    await Task.Delay(2000);
                     startDate = startDate.AddMonths(1);
                 }
             }
