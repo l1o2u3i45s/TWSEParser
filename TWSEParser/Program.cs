@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using TWSEParser.Service;
+
+DataParser dataParser = new DataParser();
+await dataParser.GetStockPrice("006208");
