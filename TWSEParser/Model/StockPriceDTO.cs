@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TWSEParser.Service;
 
 namespace TWSEParser.Model
 {
@@ -17,15 +18,45 @@ namespace TWSEParser.Model
                 throw new NotImplementedException("StockPriceDTO data error!");
 
             Date = Convert.ToDateTime(data[0]).AddYears(1911);
-            TradeVolumn = Convert.ToInt32(data[1].Replace(",",""));
-            TradeMoney = Convert.ToDouble(data[2].Replace(",", ""));
-            OpenPrice = Convert.ToDouble(data[3].Replace(",", ""));
-            MaxPrice = Convert.ToDouble(data[4].Replace(",", ""));
-            MinPrice = Convert.ToDouble(data[5].Replace(",", ""));
-            ClosePrice = Convert.ToDouble(data[6].Replace(",", ""));
+            TradeVolumn = ParseInt(data[1]);
+            TradeMoney = ParseDouble(data[2]);
+            OpenPrice = ParseDouble(data[3]);
+            MaxPrice = ParseDouble(data[4]);
+            MinPrice = ParseDouble(data[5]);
+
+            ClosePrice = ParseDouble(data[6]);
             Spread = data[7];
-            TradeCount = Convert.ToInt32(data[8].Replace(",", ""));
+            TradeCount = ParseInt(data[8]);
         }
+
+        private int ParseInt(string input)
+        {
+            if (Int32.TryParse(input.Replace(",", ""), out int result))
+            {
+                return result;
+            }
+            else
+            {
+                // 记录错误或采取其他措施
+                IsValid = false;
+                return 0; // 或者返回一个默认值
+            }
+        }
+
+        private double ParseDouble(string input)
+        {
+            if (Double.TryParse(input.Replace(",", ""), out double result))
+            {
+                return result;
+            }
+            else
+            {
+                IsValid = false;
+                return 0; // 或者返回一个默认值
+            }
+        }
+
+        public bool IsValid { get; set; } = true;
         public string ID { get; set; }
 
         public DateTime Date { get; set; } //日期

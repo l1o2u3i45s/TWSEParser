@@ -25,6 +25,7 @@ namespace TWSEParser.Service
               
                 while (startDate < DateTime.Today)
                 {
+                    Console.WriteLine($"Crawling Data Month:{startDate:yyyyMMdd}");
                     string requestUrl =
                         $"https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY?date={startDate:yyyyMMdd}&stockNo={code}&response=json";
 
@@ -35,11 +36,16 @@ namespace TWSEParser.Service
                     foreach (var item in rawDataList)
                     {
                         var dataArr = JsonConvert.DeserializeObject<string[]>(item.ToString());
+                        if(dataArr.Any(_ => _.Contains("-")))
+                            continue;
+
                         StockPriceDTO dto = new StockPriceDTO(code, dataArr);
-                        result.Add(dto);
+                        if(dto.IsValid)
+                            result.Add(dto);
                     }
 
                     await Task.Delay(500);
+                    startDate = startDate.AddMonths(1);
                 }
             }
             catch (Exception e)
