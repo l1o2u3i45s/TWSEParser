@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using TWSEParser.Model;
 using TWSEParser.Service;
 
 
@@ -8,7 +9,9 @@ DataProcessor dataProcessor = new DataProcessor();
 var rawDataList = await dataParser.GetStockPrice(code);
 dataProcessor.ProcessData(rawDataList);
 
-string output = JsonConvert.SerializeObject(rawDataList);
+var result = rawDataList.Select<StockPriceDTO, StockRawData>(_ => _);
+
+string output = JsonConvert.SerializeObject(result);
 
 using (StreamWriter writer = new StreamWriter(code + ".json"))
 {

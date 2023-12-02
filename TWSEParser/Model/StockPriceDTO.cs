@@ -10,7 +10,7 @@ namespace TWSEParser.Model
     internal class StockPriceDTO
     {
 
-        public StockPriceDTO(string id,string[] data)
+        public StockPriceDTO(string id, string[] data)
         {
             ID = id;
 
@@ -81,6 +81,23 @@ namespace TWSEParser.Model
         public double MA60 { get; set; }
         public double MACD { get; set; }
 
-        public double MACDSignal {get; set; }
+        public double MACDSignal { get; set; }
+
+        public static implicit operator StockRawData(StockPriceDTO dto)
+        {
+            return new StockRawData()
+            {
+                TradeVolumn = dto.TradeVolumn,
+                OpenPrice = dto.OpenPrice,
+                MaxPrice = dto.MaxPrice,
+                MinPrice = dto.MinPrice,
+                ClosePrice = dto.ClosePrice,
+                MA5 = dto.MA5,
+                MA10 = dto.MA10,
+                MA20 = dto.MA20,
+                MA60 = dto.MA60,
+                MACDSignal = dto.MACDSignal,
+            };
+        }
     }
 }
